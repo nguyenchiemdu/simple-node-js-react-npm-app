@@ -16,12 +16,11 @@ phases:
     commands:
       - echo Deploying the application
       - "which ssh-agent || ( apk update && apk add openssh-client )"
-      - eval $(ssh-agent -s)
-      - exec ssh-agent bash
+      - eval `ssh-agent -s`
       - sudo echo "$VM_PRIVATE_KEY" > id_rsa
       - sudo cat ./id_rsa
       - sudo chmod 600 id_rsa
-      - sudo ssh-add ./id_rsa
+      - ssh-add ./id_rsa
       - sudo mkdir -p ~/.ssh
       - sudo echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
