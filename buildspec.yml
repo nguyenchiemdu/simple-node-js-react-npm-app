@@ -16,7 +16,7 @@ phases:
     commands:
       - echo Deploying the application
       - "which ssh-agent || ( apk update && apk add openssh-client )"
-      - eval $(ssh-agent -s)
+      - sudo eval $(ssh-agent -s)
       - sudo echo "$VM_PRIVATE_KEY" > id_rsa
       - sudo cat ./id_rsa
       - sudo chmod 600 id_rsa
