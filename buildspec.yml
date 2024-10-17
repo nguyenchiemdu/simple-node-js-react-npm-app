@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing dependencies...
+      - echo $ENV
+
+  pre_build:
+    commands:
+      - echo Starting build process...
+
+  build:
+    commands:
+      - echo Building the application...
+
+  post_build:
+    commands:
+      - echo Build complete.
+      - echo Preparing for deployment...
+  deploy:
+    commands:
+      - echo Starting deployment...
