@@ -18,6 +18,3 @@ phases:
     commands:
       - echo Build complete.
       - echo Preparing for deployment...
-  deploy:
-    commands:
-      - echo Starting deployment...
