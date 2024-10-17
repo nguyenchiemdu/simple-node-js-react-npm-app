@@ -1,31 +1,32 @@
 version: 0.2
 
 phases:
-  install:
-    commands:
-      - echo Logging in to Github Package Registry
-      - docker login ghcr.io -u $GITHUB_USERNAME -p $GITHUB_TOKEN
+  # install:
+  #   commands:
+  #     - echo Logging in to Github Package Registry
+  #     - docker login ghcr.io -u $GITHUB_USERNAME -p $GITHUB_TOKEN
 
-  pre_build:
-    commands:
-      - echo Starting build process
-      - sudo docker build -t ghcr.io/nguyenchiemdu/simple-nodejs-app:latest .
-      - sudo docker push ghcr.io/nguyenchiemdu/simple-nodejs-app:latest
+  # pre_build:
+  #   commands:
+  #     - echo Starting build process
+  #     - sudo docker build -t ghcr.io/nguyenchiemdu/simple-nodejs-app:latest .
+  #     - sudo docker push ghcr.io/nguyenchiemdu/simple-nodejs-app:latest
 
   build:
     commands:
       - echo Deploying the application
       - "which ssh-agent || ( apk update && apk add openssh-client )"
       - eval $(ssh-agent -s)
-      - echo "$VM_PRIVATE_KEY" > id_rsa
-      - chmod 600 id_rsa
-      - ssh-add ./id_rsa
-      - mkdir -p ~/.ssh
-      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+      - sudo echo "$VM_PRIVATE_KEY" > id_rsa
+      - sudo cat ./id_rsa
+      - sudo chmod 600 id_rsa
+      - sudo ssh-add ./id_rsa
+      - sudo mkdir -p ~/.ssh
+      - sudo echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
   post_build:
     commands:
-      - ssh $PROD_VM_ADDRESS "mkdir -p $DOCKER_COMPOSE_DIR"
-      - ssh $PROD_VM_ADDRESS "ls"
-      - scp docker-compose.yml $PROD_VM_ADDRESS:~/$DOCKER_COMPOSE_DIR/docker-compose.yml
-      - scp nginx.conf $PROD_VM_ADDRESS:~/$DOCKER_COMPOSE_DIR/nginx.conf
+      - sudo ssh $PROD_VM_ADDRESS "mkdir -p $DOCKER_COMPOSE_DIR"
+      - sudo ssh $PROD_VM_ADDRESS "ls"
+      - sudo scp docker-compose.yml $PROD_VM_ADDRESS:~/$DOCKER_COMPOSE_DIR/docker-compose.yml
+      - sudo scp nginx.conf $PROD_VM_ADDRESS:~/$DOCKER_COMPOSE_DIR/nginx.conf
