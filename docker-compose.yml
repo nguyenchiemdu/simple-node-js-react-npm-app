@@ -1,0 +1,16 @@
+services:
+  sample-nodejs-app:
+    image: ghcr.io/nguyenchiemdu/simple-nodejs-app:latest
+    container_name: sample-nodejs-app
+    restart: unless-stopped
+    ports:
+      - ${PORT}:${PORT}
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    restart: always
+    ports:
+      - 80:80
