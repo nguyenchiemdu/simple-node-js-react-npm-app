@@ -21,8 +21,8 @@ phases:
       - sudo cat ./id_rsa
       - sudo chmod 600 id_rsa
       # - ssh-add ./id_rsa
-      # - sudo mkdir -p ~/.ssh
-      # - sudo echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+      - sudo mkdir -p ~/.ssh
+      - sudo echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
   post_build:
     commands:
