@@ -9,8 +9,8 @@ phases:
   pre_build:
     commands:
       - echo Starting build process
-      - docker build -t ghcr.io/$REGISTRY_URL:latest .
-      - docker push ghcr.io/$REGISTRY_URL:latest
+      - sudo docker build -t ghcr.io/nguyenchiemdu/simple-nodejs-app:latest .
+      - sudo docker push ghcr.io/nguyenchiemdu/simple-nodejs-app:latest
 
   build:
     commands:
