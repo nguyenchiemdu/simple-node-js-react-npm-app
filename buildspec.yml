@@ -23,13 +23,13 @@ phases:
       - eval 'ssh-agent -s'
       - echo "$VM_PRIVATE_KEY" > id_rsa
       - chmod 400 id_rsa
-      - ssh-add ./id_rsa
+      # - ssh-add ./id_rsa
       - mkdir -p ~/.ssh
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
   post_build:
     commands:
-      - ssh $PROD_VM_ADDRESS "mkdir -p $DOCKER_COMPOSE_DIR"
-      - ssh $PROD_VM_ADDRESS "ls"
-      - scp docker-compose.yml $PROD_VM_ADDRESS:~/$DOCKER_COMPOSE_DIR/docker-compose.yml
-      - scp nginx.conf $PROD_VM_ADDRESS:~/$DOCKER_COMPOSE_DIR/nginx.conf
+      - ssh -i ./id_rsa $PROD_VM_ADDRESS "mkdir -p $DOCKER_COMPOSE_DIR"
+      - ssh -i ./id_rsa $PROD_VM_ADDRESS
+      - scp -i ./id_rsa docker-compose.yml $PROD_VM_ADDRESS:~/$DOCKER_COMPOSE_DIR/docker-compose.yml
+      - scp -i ./id_rsa nginx.conf $PROD_VM_ADDRESS:~/$DOCKER_COMPOSE_DIR/nginx.conf
