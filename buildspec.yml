@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  parameter-store:
+    VM_PRIVATE_KEY: /xagoe/VM_PRIVATE_KEY
+
 phases:
   # install:
   #   commands:
