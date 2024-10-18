@@ -21,16 +21,16 @@ phases:
       - echo Deploying the application
       - "which ssh-agent || ( apk update && apk add openssh-client )"
       - eval `ssh-agent -s`
-      - sudo echo "$VM_PRIVATE_KEY" > id_rsa
-      - sudo cat ./id_rsa
-      - sudo chmod 600 id_rsa
-      # - ssh-add ./id_rsa
-      - sudo mkdir -p ~/.ssh
-      - sudo echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+      - echo "$VM_PRIVATE_KEY"
+      - echo "$VM_PRIVATE_KEY" > id_rsa
+      - chmod 400 id_rsa
+      - ssh-add ./id_rsa
+      - mkdir -p ~/.ssh
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
   post_build:
     commands:
-      - sudo ssh -i ./id_rsa $PROD_VM_ADDRESS "mkdir -p $DOCKER_COMPOSE_DIR"
+      - sudo ssh $PROD_VM_ADDRESS "mkdir -p $DOCKER_COMPOSE_DIR"
       - sudo ssh $PROD_VM_ADDRESS "ls"
       - sudo scp docker-compose.yml $PROD_VM_ADDRESS:~/$DOCKER_COMPOSE_DIR/docker-compose.yml
       - sudo scp nginx.conf $PROD_VM_ADDRESS:~/$DOCKER_COMPOSE_DIR/nginx.conf
